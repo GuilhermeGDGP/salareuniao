@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { RoomService } from '../room.service';
+import { Room } from '../room';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-room',
@@ -7,9 +10,42 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateRoomComponent implements OnInit {
 
-  constructor() { }
+  room: Room = new Room();
+  submitted: boolean = false;
+
+  constructor(
+    private roomService: RoomService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  newRoom(): void {
+    this.submitted = false;
+    this.room = new Room();
+  }
+
+  save(): void {
+    this.roomService.createRoom(this.room).subscribe(
+      data => {
+        console.log(data)
+      },
+      error => {
+        console.log(error)
+      }
+    );
+    this.room = new Room();
+    this.gotoList();
+  }
+
+  onSubmit(): void {
+    this.submitted = true;
+    this.save();
+  }
+
+  gotoList(): void {
+    this.router.navigate(['/rooms']);
   }
 
 }
