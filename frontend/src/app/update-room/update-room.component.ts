@@ -12,7 +12,7 @@ export class UpdateRoomComponent implements OnInit {
 
   id: number;
   room: Room;
-  submited: boolean = false;
+  submitted: boolean = false;
 
   constructor(
     private route: ActivatedRoute,

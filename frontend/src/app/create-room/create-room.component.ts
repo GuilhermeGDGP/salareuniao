@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
 import { RoomService } from '../room.service';
 import { Room } from '../room';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,14 +11,12 @@ import { Router } from '@angular/router';
 export class CreateRoomComponent implements OnInit {
 
   room: Room = new Room();
-  submitted: boolean = false;
+  submitted = false;
 
-  constructor(
-    private roomService: RoomService,
-    private router: Router
-  ) { }
+  constructor(private roomService: RoomService,
+    private router: Router) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
   }
 
   newRoom(): void {
@@ -26,26 +24,19 @@ export class CreateRoomComponent implements OnInit {
     this.room = new Room();
   }
 
-  save(): void {
-    this.roomService.createRoom(this.room).subscribe(
-      data => {
-        console.log(data)
-      },
-      error => {
-        console.log(error)
-      }
-    );
+  save() {
+    this.roomService.createRoom(this.room)
+      .subscribe(data => console.log(data), error => console.log(error));
     this.room = new Room();
     this.gotoList();
   }
 
-  onSubmit(): void {
+  onSubmit() {
     this.submitted = true;
-    this.save();
+    this.save();    
   }
 
-  gotoList(): void {
+  gotoList() {
     this.router.navigate(['/rooms']);
   }
-
 }
